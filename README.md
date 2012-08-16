@@ -1,4 +1,4 @@
 tapestry-mongodb
-================
+=====================
 
-Tapestry5 MongoDB module for Tapestry5 WEB Components framework
+Apache Tapestry Web components - MongoDB integration module
