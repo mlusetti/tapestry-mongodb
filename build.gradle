@@ -17,6 +17,9 @@ repositories {
     // For access to Morhpia Mapping library for mongo
     mavenRepo url: "http://morphia.googlecode.com/svn/mavenrepo/"
 
+    // For access Embedded Mongod for unit tests
+    mavenRepo url: "http://repository-thiloplanz.forge.cloudbees.com/release/"
+
 }
 
 dependencies {
@@ -33,6 +36,9 @@ dependencies {
     // testCompile "org.testng:testng:$testngVersion", { transitive = false }
 
     testCompile "org.spockframework:spock-tapestry:0.6-groovy-1.8"
+
+    testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.21"
+
     groovy "org.codehaus.groovy:groovy-all:1.8.6"
 }
 
