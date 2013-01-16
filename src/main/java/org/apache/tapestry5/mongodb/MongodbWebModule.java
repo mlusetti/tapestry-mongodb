@@ -1,22 +1,17 @@
 package org.apache.tapestry5.mongodb;
 
-import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.internal.InternalConstants;
-import org.apache.tapestry5.internal.mongodb.MorphiaSessionSourceImpl;
-import org.apache.tapestry5.internal.mongodb.MorphiaValueEncoder;
+import org.apache.tapestry5.internal.mongodb.JongoSessionSourceImpl;
 import org.apache.tapestry5.ioc.Configuration;
-import org.apache.tapestry5.ioc.LoggerSource;
-import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.ioc.services.*;
-import org.apache.tapestry5.services.ValueEncoderFactory;
+import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Defines services which are responsible for MongoDB initializations and connections.
@@ -27,28 +22,21 @@ public class MongodbWebModule
     {
     }
 
-    @Contribute(value = MorphiaSessionSource.class)
+    @Contribute(value = JongoSessionSource.class)
     public static void contributeDefaultPackageName(Configuration<String> configuration,
-                                                               @Symbol(InternalConstants.TAPESTRY_APP_PACKAGE_PARAM)
-                                                               String appRootPackage)
+					@Symbol(InternalConstants.TAPESTRY_APP_PACKAGE_PARAM)
+                    String appRootPackage)
     {
         configuration.add(appRootPackage + ".mongodb");
     }
 
 
-    public static MorphiaSessionSource buildMorphiaSessionSource(
-            Logger logger, MongoDBSource mongoDBSource,
+    public static JongoSessionSource buildMorphiaSessionSource(
+            Logger logger, MongoDB mongoDB,
             @Symbol(MongoDBSymbols.DEFAULT_DB_NAME) String defaultDbName,
-            ClassNameLocator classNameLocator,
             final Collection<String> packageNames)
     {
-        MorphiaSessionSource morphiaSessionSource = new MorphiaSessionSourceImpl(
-                                                            logger, mongoDBSource,
-                                                            defaultDbName, classNameLocator,
-                                                            packageNames);
-
-
-        return morphiaSessionSource;
+        return new JongoSessionSourceImpl(logger, mongoDB);
     }
 
     /**
