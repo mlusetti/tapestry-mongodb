@@ -1,4 +1,4 @@
 tapestry-mongodb
 =====================
 
-Apache Tapestry Web components - MongoDB integration module
+Now in tapestry-jongo
